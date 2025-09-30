@@ -19,6 +19,6 @@ class PageController extends AbstractController
 
     #[Route('/', name: 'inicio')]
     public function inicio(): Response {
-        
+        return $this->render('inicio.html.twig');
     }
 }
