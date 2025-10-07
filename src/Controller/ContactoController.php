@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Persistence\ManagerRegistry;
 
 class ContactoController extends AbstractController
 {
@@ -15,7 +16,11 @@ class ContactoController extends AbstractController
         7 => ["nombre" => "Laura Martínez", "telefono" => "42898966", "email" => "lm200@ieselcaminas.org"],
         9 => ["nombre" => "Nora Jover", "telefono" => "54565859", "email" => "norajover@ieselcaminas.org"]
     ];
-
+    #[Route('/', name: 'inicio')]
+    public function inicio(): Response
+    {
+        return $this->render("inicio.html.twig");
+    }   
     //Para que se muestre el código 1 por defecto:
     //#[Route('/contacto/{codigo?1}', name: 'ficha_contacto')]
     //Sin que salga nada por defecto:
