@@ -14,7 +14,7 @@
         {% endblock %}
     </head>
     <body>
-        //Esto es completamente opcional, pero hace más comodo moverse y usando Bootstrap queda con un diseño bastante mejor
+        <!-- Esto es completamente opcional, pero hace más comodo moverse y usando Bootstrap queda con un diseño bastante mejor -->
         <nav class="p-3 bg-light border-bottom d-flex justify-content-between align-items-center">
             <div>
                 {% if app.user %}
@@ -27,6 +27,7 @@
                 {% endif %}
             </div>
 
+            <!-- Para que salga con que correo hemos iniciado sesión -->
             {% if app.user %}
                 <div class="text-muted small">
                     Conectado como: <strong>{{ app.user.email }}</strong>
