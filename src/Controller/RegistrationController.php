@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
+// Este controlador como su nombre indica se encarga del registro de usuarios (que los usuarios que no tienen una cuenta la creen)
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]

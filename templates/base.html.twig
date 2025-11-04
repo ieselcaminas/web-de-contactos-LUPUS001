@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}¡Bienvenido!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         {% block stylesheets %}
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -14,6 +14,29 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        //Esto es completamente opcional, pero hace más comodo moverse y usando Bootstrap queda con un diseño bastante mejor
+        <nav class="p-3 bg-light border-bottom d-flex justify-content-between align-items-center">
+            <div>
+                {% if app.user %}
+                    <a href="{{ path('inicio') }}" class="btn btn-outline-primary btn-sm">Inicio</a>
+                    <a href="{{ path('nuevo') }}" class="btn btn-outline-success btn-sm">Nuevo contacto</a>
+                    <a href="{{ path('app_logout') }}" class="btn btn-outline-danger btn-sm">Cerrar sesión</a>
+                {% else %}
+                    <a href="{{ path('app_login') }}" class="btn btn-outline-primary btn-sm">Iniciar sesión</a>
+                    <a href="{{ path('app_register') }}" class="btn btn-outline-secondary btn-sm">Registrarse</a>
+                {% endif %}
+            </div>
+
+            {% if app.user %}
+                <div class="text-muted small">
+                    Conectado como: <strong>{{ app.user.email }}</strong>
+                </div>
+            {% endif %}
+        </nav>
+
+        // Utilizamos esta línea usando Bootstrap para que el contenido no se quede pegado al navegador
+        <div class="container mt-4">
+            {% block body %}{% endblock %}
+        </div>
     </body>
 </html>

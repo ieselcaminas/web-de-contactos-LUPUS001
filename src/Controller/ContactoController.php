@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Form\ContactoFormType as ContactoType;
 
+// Este controlador se encarga del CRUD, operaciones específicas(nuevo, editar, ficha, eliminar, etc..)
 class ContactoController extends AbstractController
 {
     private $contactos = [
@@ -24,6 +25,12 @@ class ContactoController extends AbstractController
 
     #[Route('/contacto/nuevo', name: 'nuevo')]
     public function nuevo(ManagerRegistry $doctrine, Request $request) {
+        
+        /* AQUI CUMPLIMOS: Donde sea necesario se ha de comprobar que el usuario está logeado y enviarlo a /index en caso contrario */ 
+        if (!$this->getUser()) { //No se puede crear si no has iniciado sesión
+            return $this->redirectToRoute('app_login');
+        }
+
         $contacto = new Contacto();
         $formulario = $this->createForm(ContactoType::class, $contacto);
         $formulario->handleRequest($request);
@@ -105,11 +112,7 @@ class ContactoController extends AbstractController
         }
     }*/
 
-    #[Route('/', name: 'inicio')]
-    public function inicio(): Response
-    {
-        return $this->render("inicio.html.twig");
-    }   
+       
     
 
     /*
@@ -126,6 +129,11 @@ class ContactoController extends AbstractController
 
     #[Route('/contacto/editar/{codigo}', name: 'editar', requirements:["codigo"=>"\d+"])]
     public function editar(ManagerRegistry $doctrine, Request $request, int $codigo) {
+        //Solo los usuario logeados pueden editar
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $repositorio = $doctrine->getRepository(Contacto::class);
         //En este caso, los datos los obtenemos del repositorio de contactos
 
@@ -183,6 +191,11 @@ class ContactoController extends AbstractController
 
     #[Route("/contacto/delete/{id}", name: 'eliminar_contacto')]
     public function delete(ManagerRegistry $doctrine, $id): Response {
+
+        if (!$this->getUser()) { // Nos permite 
+            return $this->redirectToRoute('app_login');
+        }
+
         $entityManager = $doctrine->getManager();
         $repositorio = $doctrine->getRepository(Contacto::class);
         $contacto = $repositorio->find($id);
